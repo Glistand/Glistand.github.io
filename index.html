@@ -205,6 +205,12 @@
 
     .card p:last-child { margin-bottom: 0; }
 
+    .job + .job {
+      margin-top: 1.6rem;
+      padding-top: 1.4rem;
+      border-top: 1px solid var(--line);
+    }
+
     .job-head {
       display: flex;
       flex-wrap: wrap;
@@ -288,7 +294,7 @@
       <img class="avatar" src="assets/avatar.png" alt="Рома Пригодич" width="96" height="96" />
       <div>
         <h1>Рома Пригодич</h1>
-        <p class="role">DevOps Engineer · Backend Developer</p>
+        <p class="role">DevOps-инженер · backend-задачи</p>
         <div class="cta">
           <a class="btn primary" href="https://t.me/G_l_s_t_n_d">Telegram</a>
           <a class="btn" href="https://github.com/Glistand">GitHub</a>
@@ -298,42 +304,57 @@
 
     <section class="card">
       <h2>О себе</h2>
-      <p>Мне 21 год. Строю инфраструктуру и CI/CD, поднимаю Kubernetes и мониторинг, пишу backend на Java, Go и Python.</p>
+      <p>Мне 21 год. DevOps-инженер: инфраструктура, CI/CD, Kubernetes и мониторинг; параллельно backend на Java, Go и Python.</p>
     </section>
 
     <section class="card">
       <h2>Опыт</h2>
 
-      <div class="job-head">
-        <h3>Balinasoft</h3>
-        <span class="when">май 2025 — октябрь 2026</span>
-      </div>
-      <p class="job-role">DevOps / Backend</p>
+      <article class="job">
+        <div class="job-head">
+          <h3>ИРЦ БЖД</h3>
+          <span class="when">июль 2026 — октябрь 2026</span>
+        </div>
+        <p class="job-role">DevOps-инженер</p>
+        <ul class="list">
+          <li>NetBird VPN: доступы, группы и политики</li>
+          <li>Виртуализация VMware vCenter / ESXi</li>
+          <li>Поддержка и развитие внутренней инфраструктуры</li>
+        </ul>
+      </article>
 
-      <p class="sub">Платформа и GitOps</p>
-      <ul class="list">
-        <li>Настройка Kubernetes-кластера и виртуальных машин под продуктовые окружения</li>
-        <li>Полный CI/CD с GitOps и Argo CD</li>
-        <li>Реплицированная MySQL и мониторинг через Grafana</li>
-      </ul>
+      <article class="job">
+        <div class="job-head">
+          <h3>Balinasoft</h3>
+          <span class="when">май 2025 — октябрь 2026</span>
+        </div>
+        <p class="job-role">DevOps-инженер с выполнением backend-задач</p>
 
-      <p class="sub">Корпоративная инфраструктура</p>
-      <ul class="list">
-        <li>Self-hosted NetBird VPN: доступы к инфраструктуре, аккаунты и политики</li>
-        <li>Перенос проектов между VPS и внутренними серверами</li>
-        <li>CI/CD сборки Docker-образов в локальный registry и закрытый Harbor с анализом Trivy</li>
-        <li>Закрытие тестовых окружений за VPN, чтобы снаружи нельзя было зайти случайно</li>
-        <li>Пайплайны сборки Android-приложений и desktop-сборок под Windows / Linux / macOS</li>
-      </ul>
+        <p class="sub">Платформа и GitOps</p>
+        <ul class="list">
+          <li>Настройка Kubernetes-кластера и виртуальных машин под продуктовые окружения</li>
+          <li>Полный CI/CD с GitOps и Argo CD</li>
+          <li>Реплицированная MySQL и мониторинг через Grafana</li>
+        </ul>
 
-      <p class="sub">Backend и доставка</p>
-      <ul class="list">
-        <li>Миграция сервисов с Java 11 на Java 17</li>
-        <li>Проектирование перехода с Java-монолита на Go-микросервисы с учётом роста нагрузки</li>
-        <li>Разработка и оптимизация (в т.ч. N+1 запросов)</li>
-        <li>DNS, Nginx, SSL через Certbot</li>
-        <li>Парсер на Python для наполнения сайта данными</li>
-      </ul>
+        <p class="sub">Корпоративная инфраструктура</p>
+        <ul class="list">
+          <li>Self-hosted NetBird VPN: доступы к инфраструктуре, аккаунты и политики</li>
+          <li>Перенос проектов между VPS и внутренними серверами</li>
+          <li>CI/CD сборки Docker-образов в локальный registry и закрытый Harbor с анализом Trivy</li>
+          <li>Закрытие тестовых окружений за VPN, чтобы снаружи нельзя было зайти случайно</li>
+          <li>Пайплайны сборки Android-приложений и desktop-сборок под Windows / Linux / macOS</li>
+        </ul>
+
+        <p class="sub">Backend и доставка</p>
+        <ul class="list">
+          <li>Миграция сервисов с Java 11 на Java 17</li>
+          <li>Проектирование перехода с Java-монолита на Go-микросервисы с учётом роста нагрузки</li>
+          <li>Разработка и оптимизация (в т.ч. N+1 запросов)</li>
+          <li>DNS, Nginx, SSL через Certbot</li>
+          <li>Парсер на Python для наполнения сайта данными</li>
+        </ul>
+      </article>
     </section>
 
     <section class="card">
@@ -346,7 +367,7 @@
         <li>Harbor</li>
         <li>Trivy</li>
         <li>NetBird</li>
-        <li>VMware</li>
+        <li>vCenter / ESXi</li>
         <li>Grafana</li>
         <li>MySQL</li>
         <li>Nginx</li>
