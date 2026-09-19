@@ -205,13 +205,47 @@
 
     .card p:last-child { margin-bottom: 0; }
 
+    .job-head {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.35rem 1rem;
+      margin-bottom: 0.85rem;
+    }
+
+    .job-head h3 {
+      margin: 0;
+      font-size: 1.02rem;
+      font-weight: 600;
+    }
+
+    .job-head .when {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    .job-role {
+      margin: -0.35rem 0 0.9rem;
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .sub {
+      margin: 1rem 0 0.45rem;
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .sub:first-of-type { margin-top: 0.25rem; }
+
     .list {
       margin: 0;
       padding-left: 1.1rem;
       color: var(--muted);
     }
 
-    .list li { margin: 0.3rem 0; }
+    .list li { margin: 0.35rem 0; }
 
     .chips {
       display: flex;
@@ -254,7 +288,7 @@
       <img class="avatar" src="assets/avatar.png" alt="Рома Пригодич" width="96" height="96" />
       <div>
         <h1>Рома Пригодич</h1>
-        <p class="role">DevOps Engineer · Backend Developer · ИРЦ БЖД</p>
+        <p class="role">DevOps Engineer · Backend Developer</p>
         <div class="cta">
           <a class="btn primary" href="https://t.me/G_l_s_t_n_d">Telegram</a>
           <a class="btn" href="https://github.com/Glistand">GitHub</a>
@@ -264,34 +298,63 @@
 
     <section class="card">
       <h2>О себе</h2>
-      <p>Мне 21 год. Занимаюсь CI/CD, Kubernetes, виртуализацией и observability. Параллельно пишу backend на Python и Java.</p>
+      <p>Мне 21 год. Строю инфраструктуру и CI/CD, поднимаю Kubernetes и мониторинг, пишу backend на Java, Go и Python.</p>
     </section>
 
     <section class="card">
-      <h2>Что делаю</h2>
+      <h2>Опыт</h2>
+
+      <div class="job-head">
+        <h3>Balinasoft</h3>
+        <span class="when">май 2025 — октябрь 2026</span>
+      </div>
+      <p class="job-role">DevOps / Backend</p>
+
+      <p class="sub">Платформа и GitOps</p>
       <ul class="list">
-        <li>Пайплайны GitLab CI и GitOps с ArgoCD</li>
-        <li>Деплой и масштабирование в Kubernetes</li>
-        <li>Мониторинг: Grafana + Prometheus</li>
-        <li>NetBird VPN и vCenter / ESXi</li>
+        <li>Настройка Kubernetes-кластера и виртуальных машин под продуктовые окружения</li>
+        <li>Полный CI/CD с GitOps и Argo CD</li>
+        <li>Реплицированная MySQL и мониторинг через Grafana</li>
+      </ul>
+
+      <p class="sub">Корпоративная инфраструктура</p>
+      <ul class="list">
+        <li>Self-hosted NetBird VPN: доступы к инфраструктуре, аккаунты и политики</li>
+        <li>Перенос проектов между VPS и внутренними серверами</li>
+        <li>CI/CD сборки Docker-образов в локальный registry и закрытый Harbor с анализом Trivy</li>
+        <li>Закрытие тестовых окружений за VPN, чтобы снаружи нельзя было зайти случайно</li>
+        <li>Пайплайны сборки Android-приложений и desktop-сборок под Windows / Linux / macOS</li>
+      </ul>
+
+      <p class="sub">Backend и доставка</p>
+      <ul class="list">
+        <li>Миграция сервисов с Java 11 на Java 17</li>
+        <li>Проектирование перехода с Java-монолита на Go-микросервисы с учётом роста нагрузки</li>
+        <li>Разработка и оптимизация (в т.ч. N+1 запросов)</li>
+        <li>DNS, Nginx, SSL через Certbot</li>
+        <li>Парсер на Python для наполнения сайта данными</li>
       </ul>
     </section>
 
     <section class="card">
       <h2>Стек</h2>
       <ul class="chips">
-        <li>Docker</li>
         <li>Kubernetes</li>
+        <li>Argo CD</li>
         <li>GitLab CI</li>
-        <li>ArgoCD</li>
-        <li>Grafana</li>
+        <li>Docker</li>
+        <li>Harbor</li>
+        <li>Trivy</li>
         <li>NetBird</li>
         <li>VMware</li>
-        <li>Python</li>
-        <li>FastAPI</li>
+        <li>Grafana</li>
+        <li>MySQL</li>
+        <li>Nginx</li>
+        <li>Certbot</li>
         <li>Java</li>
-        <li>Spring</li>
-        <li>PostgreSQL</li>
+        <li>Go</li>
+        <li>Python</li>
+        <li>Android CI</li>
       </ul>
     </section>
 
