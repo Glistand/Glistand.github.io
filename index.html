@@ -3,25 +3,36 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Рома Пригодич — DevOps-инженер с backend-задачами" />
-  <title>Рома Пригодич</title>
+  <meta name="description" content="Рома Пригодич — DevOps-инженер с backend-задачами. Kubernetes, GitOps, VPN, мониторинг. Беларусь." />
+  <meta name="author" content="Рома Пригодич" />
+  <meta property="og:title" content="Рома Пригодич — DevOps &amp; Backend" />
+  <meta property="og:description" content="CI/CD, Kubernetes, VPN и мониторинг — плюс Java, Go и Python. Открыт к задачам." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/avatar.png" />
+  <meta name="theme-color" content="#03151c" />
+  <title>Рома Пригодич — DevOps &amp; Backend</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&family=Instrument+Sans:wght@600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0a0c10;
-      --surface: #12161e;
-      --surface-2: #181e28;
-      --text: #eef2f7;
-      --muted: #8b95a8;
-      --accent: #4ea1ff;
-      --accent-soft: rgba(78, 161, 255, 0.12);
-      --line: rgba(238, 242, 247, 0.08);
-      --radius: 18px;
-      --font: "DM Sans", sans-serif;
-      --display: "Instrument Sans", sans-serif;
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --abyss: #03151c;
+      --deep: #072a36;
+      --panel: #0e3a48;
+      --fog: #8eb8c4;
+      --paper: #e8f7f4;
+      --live: #1ad4a5;
+      --live-dim: rgba(26, 212, 165, 0.14);
+      --pulse: #ff5e4d;
+      --pulse-dim: rgba(255, 94, 77, 0.16);
+      --beam: #5eb8ff;
+      --beam-dim: rgba(94, 184, 255, 0.14);
+      --line: rgba(232, 247, 244, 0.1);
+      --display: "Syne", sans-serif;
+      --body: "Literata", Georgia, serif;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --mx: 70%;
+      --my: 20%;
     }
 
     * { box-sizing: border-box; }
@@ -29,96 +40,353 @@
     body {
       margin: 0;
       min-height: 100svh;
-      color: var(--text);
-      background: var(--bg);
-      font-family: var(--font);
-      line-height: 1.55;
+      color: var(--paper);
+      background: var(--abyss);
+      font-family: var(--body);
+      font-size: 1.05rem;
+      line-height: 1.65;
       overflow-x: hidden;
     }
 
-    a { color: var(--accent); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    img { max-width: 100%; display: block; }
+    a { color: var(--beam); text-decoration-thickness: 1px; text-underline-offset: 0.18em; }
+    a:hover { color: var(--live); }
+    a:focus-visible,
+    .btn:focus-visible,
+    .nav a:focus-visible {
+      outline: 2px solid var(--pulse);
+      outline-offset: 3px;
+    }
 
-    .bg {
+    /* —— Atmosphere + cursor spotlight —— */
+    .sky {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
       background:
-        radial-gradient(900px 500px at 15% -5%, rgba(78, 161, 255, 0.16), transparent 60%),
-        radial-gradient(700px 420px at 95% 15%, rgba(78, 161, 255, 0.08), transparent 55%),
-        linear-gradient(180deg, #0c1018 0%, var(--bg) 45%, #080a0e 100%);
+        radial-gradient(ellipse 55% 40% at var(--mx) var(--my), rgba(26, 212, 165, 0.18), transparent 55%),
+        radial-gradient(ellipse 50% 35% at calc(var(--mx) + 10%) calc(var(--my) + 15%), rgba(255, 94, 77, 0.1), transparent 50%),
+        radial-gradient(ellipse 70% 45% at 80% 0%, rgba(94, 184, 255, 0.1), transparent 55%),
+        linear-gradient(180deg, #052430 0%, var(--abyss) 42%, #021018 100%);
+      transition: background 0.15s linear;
     }
 
-    .bg::after {
+    .sky::before {
       content: "";
       position: absolute;
       inset: 0;
-      opacity: 0.35;
-      background-image:
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-      background-size: 64px 64px;
-      mask-image: radial-gradient(ellipse at 50% 20%, black 10%, transparent 70%);
+      opacity: 0.5;
+      background: url("assets/baltic-teal-atmosphere.jpg") center / cover no-repeat;
+      mask-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.22) 38%, transparent 72%);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.22) 38%, transparent 72%);
+      filter: saturate(1.15) hue-rotate(-8deg);
     }
 
-    .wrap {
-      position: relative;
-      z-index: 1;
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 1.5rem 1.15rem 3.5rem;
+    .sky::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0.3;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+      mix-blend-mode: overlay;
     }
 
-    @media (min-width: 800px) {
-      .wrap { padding: 2rem 2rem 4.5rem; }
-    }
+    .page { position: relative; z-index: 1; }
 
+    /* —— Nav —— */
     .nav {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       gap: 1rem;
-      margin-bottom: 2rem;
-      padding: 0.85rem 1rem;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: rgba(18, 22, 30, 0.72);
-      backdrop-filter: blur(12px);
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1.1rem 1.25rem;
     }
 
-    .nav .logo {
+    .nav-brand {
       font-family: var(--display);
-      font-weight: 700;
-      color: var(--text);
+      font-weight: 800;
+      font-size: 1.05rem;
+      letter-spacing: -0.03em;
+      color: var(--paper);
       text-decoration: none;
-      letter-spacing: -0.02em;
+    }
+
+    .nav-brand span {
+      background: linear-gradient(120deg, var(--live), var(--beam));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
     }
 
     .nav-links {
       display: none;
-      gap: 1.1rem;
+      gap: 1.35rem;
       list-style: none;
       margin: 0;
       padding: 0;
     }
 
     .nav-links a {
-      color: var(--muted);
-      font-size: 0.9rem;
+      font-family: var(--display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      color: var(--fog);
       text-decoration: none;
+      text-transform: uppercase;
+      position: relative;
     }
 
-    .nav-links a:hover { color: var(--text); }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -0.35rem;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, var(--live), var(--pulse));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s var(--ease);
+    }
 
-    @media (min-width: 720px) {
+    .nav-links a:hover { color: var(--paper); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    @media (min-width: 760px) {
       .nav-links { display: flex; }
+      .nav { padding: 1.35rem 2rem; }
+    }
+
+    /* —— Hero —— */
+    .hero {
+      position: relative;
+      min-height: min(88svh, 780px);
+      display: grid;
+      align-items: center;
+      padding: 1.5rem 0 3rem;
+      overflow: hidden;
+    }
+
+    .hero-media {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      will-change: transform;
+    }
+
+    .hero-media img.portrait {
+      position: absolute;
+      right: -12%;
+      bottom: 0;
+      width: min(88vw, 420px);
+      height: auto;
+      max-height: 58%;
+      object-fit: cover;
+      object-position: center 12%;
+      mask-image:
+        linear-gradient(90deg, transparent 0%, black 35%, black 100%),
+        linear-gradient(180deg, transparent 0%, black 25%, black 75%, transparent 100%);
+      -webkit-mask-image:
+        linear-gradient(90deg, transparent 0%, black 35%, black 100%),
+        linear-gradient(180deg, transparent 0%, black 25%, black 75%, transparent 100%);
+      mask-composite: intersect;
+      -webkit-mask-composite: source-in;
+      filter: saturate(1.12) contrast(1.05);
+      opacity: 0;
+      transform: translate3d(24px, 0, 0);
+      transition: opacity 1s var(--ease), transform 1.1s var(--ease);
+      pointer-events: none;
+      will-change: transform;
+    }
+
+    .hero.is-ready .hero-media img.portrait {
+      opacity: 1;
+      transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
+    }
+
+    .hero-fade {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(3, 21, 28, 0.55) 0%, rgba(3, 21, 28, 0.15) 40%, rgba(3, 21, 28, 0.82) 100%),
+        linear-gradient(90deg, var(--abyss) 0%, rgba(3, 21, 28, 0.88) 55%, rgba(3, 21, 28, 0.4) 100%);
+      z-index: 1;
+    }
+
+    @media (min-width: 760px) {
+      .hero-fade {
+        background:
+          linear-gradient(90deg, var(--abyss) 0%, rgba(3, 21, 28, 0.92) 36%, rgba(3, 21, 28, 0.28) 68%, rgba(3, 21, 28, 0.55) 100%),
+          linear-gradient(180deg, transparent 55%, var(--abyss) 100%);
+      }
+      .hero-media img.portrait {
+        right: 2%;
+        bottom: -2%;
+        width: min(46vw, 500px);
+        max-height: 90%;
+        mask-image: linear-gradient(90deg, transparent 0%, black 18%, black 100%),
+          linear-gradient(180deg, black 72%, transparent 100%);
+        -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 18%, black 100%),
+          linear-gradient(180deg, black 72%, transparent 100%);
+      }
+    }
+
+    .hero-copy {
+      position: relative;
+      z-index: 2;
+      max-width: 1180px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 0;
+    }
+
+    @media (min-width: 760px) {
+      .hero-copy { padding: 1rem 2rem 0; }
+    }
+
+    .hero-place {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      margin: 0 0 1rem;
+      font-family: var(--display);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--pulse);
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+
+    .hero.is-ready .hero-place {
+      opacity: 1;
+      transform: none;
+      transition-delay: 0.1s;
+    }
+
+    .hero-place::before {
+      content: "";
+      width: 1.6rem;
+      height: 2px;
+      background: linear-gradient(90deg, var(--pulse), var(--live));
+    }
+
+    .hero h1 {
+      margin: 0;
+      max-width: 14ch;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(2.75rem, 9vw, 5.4rem);
+      letter-spacing: -0.055em;
+      line-height: 0.95;
+    }
+
+    .hero h1 .char {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(1.1em) rotate(4deg);
+      transition: opacity 0.55s var(--ease), transform 0.65s var(--ease);
+    }
+
+    .hero.is-ready h1 .char {
+      opacity: 1;
+      transform: none;
+    }
+
+    .hero h1 .char.space { width: 0.28em; }
+
+    .hero-lead {
+      margin: 1.15rem 0 0;
+      max-width: 32rem;
+      color: var(--fog);
+      font-size: clamp(1.05rem, 2.2vw, 1.22rem);
+      font-weight: 400;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.75s var(--ease), transform 0.75s var(--ease);
+    }
+
+    .hero.is-ready .hero-lead {
+      opacity: 1;
+      transform: none;
+      transition-delay: 0.55s;
+    }
+
+    .cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.65rem;
+      margin-top: 1.75rem;
+      opacity: 0;
+      transform: translateY(16px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+    }
+
+    .hero.is-ready .cta {
+      opacity: 1;
+      transform: none;
+      transition-delay: 0.7s;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.78rem 1.15rem;
+      border: 1px solid var(--line);
+      background: rgba(14, 58, 72, 0.45);
+      color: var(--paper);
+      font-family: var(--display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: -0.01em;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn:hover {
+      border-color: rgba(26, 212, 165, 0.55);
+      color: var(--paper);
+      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(26, 212, 165, 0.12);
+    }
+
+    .btn.primary {
+      background: linear-gradient(135deg, var(--pulse), #ff8a4a);
+      border-color: transparent;
+      color: #1a0806;
+      box-shadow: 0 8px 28px rgba(255, 94, 77, 0.28);
+    }
+
+    .btn.primary:hover {
+      background: linear-gradient(135deg, #ff7466, #ff9a5c);
+      color: #1a0806;
+      box-shadow: 0 12px 32px rgba(255, 94, 77, 0.38);
+    }
+
+    /* —— Content shell —— */
+    .shell {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 0 1.25rem 4rem;
+    }
+
+    @media (min-width: 760px) {
+      .shell { padding: 0 2rem 5.5rem; }
     }
 
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
-      transition: opacity 0.55s ease, transform 0.55s ease;
+      transform: translateY(28px);
+      transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
     }
 
     .reveal.in {
@@ -126,568 +394,659 @@
       transform: none;
     }
 
+    /* Diagonal mesh divider between sections */
+    .rail {
+      height: 1px;
+      margin: 0.25rem 0;
+      border: 0;
+      background: linear-gradient(90deg, transparent, var(--live), var(--pulse), var(--beam), transparent);
+      opacity: 0.55;
+      transform: scaleX(0.4);
+      transform-origin: center;
+      transition: transform 1s var(--ease), opacity 0.6s ease;
+    }
+
+    .rail.in {
+      transform: scaleX(1);
+      opacity: 0.85;
+    }
+
     @media (prefers-reduced-motion: reduce) {
-      .reveal { opacity: 1; transform: none; transition: none; }
-    }
-
-    .hero {
-      display: grid;
-      gap: 1.5rem;
-      margin-bottom: 2rem;
-      padding: 1.35rem;
-      border: 1px solid var(--line);
-      border-radius: calc(var(--radius) + 6px);
-      background: linear-gradient(160deg, rgba(24, 30, 40, 0.95), rgba(14, 18, 26, 0.9));
-      box-shadow: var(--shadow);
-    }
-
-    @media (min-width: 800px) {
-      .hero {
-        grid-template-columns: auto 1fr;
-        align-items: center;
-        gap: 2rem;
-        padding: 1.75rem;
+      html { scroll-behavior: auto; }
+      .reveal,
+      .hero-place,
+      .hero-lead,
+      .cta,
+      .hero-media img.portrait,
+      .hero h1 .char,
+      .rail {
+        opacity: 1 !important;
+        transform: none !important;
+        transition: none !important;
       }
+      .sky { transition: none; }
     }
 
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 28px;
-      object-fit: cover;
-      object-position: center 15%;
-      border: 1px solid var(--line);
-      box-shadow: 0 0 0 6px rgba(78, 161, 255, 0.08);
+    section {
+      padding: 3.1rem 0;
+      position: relative;
     }
 
-    @media (min-width: 800px) {
-      .avatar { width: 148px; height: 148px; }
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      margin: 0 0 0.65rem;
-      padding: 0.28rem 0.65rem;
-      border-radius: 999px;
-      background: var(--accent-soft);
-      color: var(--accent);
-      font-size: 0.78rem;
-      font-weight: 600;
-    }
-
-    .eyebrow::before {
+    section::before {
       content: "";
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #3dd68c;
-      box-shadow: 0 0 0 4px rgba(61, 214, 140, 0.15);
+      position: absolute;
+      left: -1.25rem;
+      top: 3.4rem;
+      bottom: 3.4rem;
+      width: 2px;
+      background: linear-gradient(180deg, transparent, var(--live-dim), var(--pulse-dim), transparent);
+      opacity: 0;
+      transition: opacity 0.6s ease;
     }
 
-    h1 {
-      margin: 0;
+    section.in::before { opacity: 1; }
+
+    @media (min-width: 760px) {
+      section::before { left: -2rem; }
+    }
+
+    .section-label {
+      display: block;
+      margin-bottom: 0.65rem;
       font-family: var(--display);
-      font-size: clamp(2rem, 5vw, 3.1rem);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--pulse);
+    }
+
+    h2 {
+      margin: 0 0 0.75rem;
+      font-family: var(--display);
+      font-weight: 800;
+      font-size: clamp(1.65rem, 3.5vw, 2.35rem);
       letter-spacing: -0.04em;
-      line-height: 1.05;
+      line-height: 1.1;
     }
 
-    .lead {
-      margin: 0.75rem 0 0;
-      max-width: 36rem;
-      color: var(--muted);
-      font-size: 1.02rem;
+    .section-intro {
+      margin: 0 0 1.75rem;
+      max-width: 38rem;
+      color: var(--fog);
     }
 
-    .cta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.6rem;
-      margin-top: 1.25rem;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.45rem;
-      padding: 0.7rem 1rem;
-      border-radius: 999px;
-      border: 1px solid var(--line);
-      background: var(--surface-2);
-      color: var(--text);
-      font-weight: 600;
-      font-size: 0.92rem;
-      text-decoration: none;
-      transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease;
-    }
-
-    .btn:hover {
-      border-color: rgba(78, 161, 255, 0.45);
-      background: #1d2533;
-      text-decoration: none;
-      transform: translateY(-1px);
-    }
-
-    .btn.primary {
-      background: var(--accent);
-      border-color: transparent;
-      color: #04101f;
-    }
-
-    .btn.primary:hover {
-      background: #6bb2ff;
-      color: #04101f;
-    }
-
-    .btn svg {
-      width: 16px;
-      height: 16px;
-      stroke: currentColor;
-      fill: none;
-      stroke-width: 1.8;
-    }
-
-    .section {
-      margin-bottom: 2rem;
-    }
-
-    .section-head {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 0.9rem;
-    }
-
-    .section-head h2 {
-      margin: 0;
-      font-family: var(--display);
-      font-size: 1.35rem;
-      letter-spacing: -0.03em;
-    }
-
-    .section-head span {
-      color: var(--muted);
-      font-size: 0.85rem;
-    }
-
-    .bento {
+    .focus-grid {
       display: grid;
-      gap: 0.85rem;
+      gap: 1.5rem 2.5rem;
     }
 
-    @media (min-width: 720px) {
-      .bento {
-        grid-template-columns: repeat(4, 1fr);
-      }
-      .bento .wide { grid-column: span 2; }
-      .bento .tall { grid-row: span 1; }
+    @media (min-width: 800px) {
+      .focus-grid { grid-template-columns: 1.15fr 1fr; }
     }
 
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 1.15rem 1.1rem;
+    .focus-prose p {
+      margin: 0 0 1rem;
+      color: var(--fog);
     }
 
-    .card h3 {
-      margin: 0 0 0.45rem;
-      font-size: 1rem;
+    .focus-prose p:last-child { margin-bottom: 0; }
+    .focus-prose strong { color: var(--paper); font-weight: 600; }
+
+    .focus-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 1.1rem;
+    }
+
+    .focus-list li {
+      padding: 0.85rem 0 0.85rem 1rem;
+      border-left: 2px solid transparent;
+      border-image: linear-gradient(180deg, var(--live), var(--pulse)) 1;
+      background: linear-gradient(90deg, var(--live-dim), transparent 70%);
+      transition: transform 0.25s var(--ease), background 0.25s ease;
+    }
+
+    .focus-list li:hover {
+      transform: translateX(4px);
+      background: linear-gradient(90deg, var(--pulse-dim), transparent 75%);
+    }
+
+    .focus-list h3 {
+      margin: 0 0 0.25rem;
+      font-family: var(--display);
+      font-size: 1.05rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
     }
 
-    .card p {
+    .focus-list p {
       margin: 0;
-      color: var(--muted);
-      font-size: 0.92rem;
+      color: var(--fog);
+      font-size: 0.95rem;
     }
 
-    .hi-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 12px;
-      display: grid;
-      place-items: center;
-      background: var(--accent-soft);
-      margin-bottom: 0.85rem;
-    }
-
-    .hi-icon img {
-      width: 26px;
-      height: 26px;
-      display: block;
-    }
-
-    .stats {
+    .metrics {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 0.85rem;
-      margin-bottom: 2rem;
+      gap: 1.25rem 1.5rem;
+      margin-top: 2.25rem;
+      padding: 1.5rem 0 0;
+      border-top: 1px solid var(--line);
     }
 
     @media (min-width: 720px) {
-      .stats { grid-template-columns: repeat(4, 1fr); }
+      .metrics { grid-template-columns: repeat(4, 1fr); }
     }
 
-    .stat {
-      padding: 1.1rem;
-      border-radius: var(--radius);
+    .metric {
+      padding: 0.85rem 0.9rem;
+      background: linear-gradient(145deg, rgba(14, 58, 72, 0.65), rgba(7, 42, 54, 0.35));
       border: 1px solid var(--line);
-      background: var(--surface);
+      transition: border-color 0.25s ease, transform 0.25s var(--ease);
     }
 
-    .stat b {
+    .metric:hover {
+      border-color: rgba(26, 212, 165, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .metric b {
       display: block;
       font-family: var(--display);
-      font-size: 1.55rem;
-      letter-spacing: -0.03em;
-      color: var(--accent);
+      font-size: clamp(1.6rem, 3vw, 2.1rem);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: var(--live);
+      line-height: 1;
+      text-shadow: 0 0 24px rgba(26, 212, 165, 0.25);
     }
 
-    .stat span {
-      color: var(--muted);
-      font-size: 0.84rem;
+    .metric span {
+      display: block;
+      margin-top: 0.4rem;
+      color: var(--fog);
+      font-size: 0.88rem;
     }
+
+    .jobs { display: grid; gap: 2rem; }
 
     .job {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 1.25rem 1.15rem;
-      margin-bottom: 0.85rem;
+      position: relative;
+      padding: 1.1rem 0 1.1rem 1.25rem;
+      border-left: 1px solid var(--line);
+      transition: border-color 0.25s ease, background 0.25s ease;
     }
+
+    .job:hover {
+      border-left-color: var(--pulse);
+      background: linear-gradient(90deg, var(--pulse-dim), transparent 55%);
+    }
+
+    .job::before {
+      content: "";
+      position: absolute;
+      left: -5px;
+      top: 1.45rem;
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--pulse);
+      box-shadow: 0 0 0 4px var(--pulse-dim), 0 0 16px rgba(255, 94, 77, 0.45);
+      transition: transform 0.25s var(--ease);
+    }
+
+    .job:hover::before { transform: scale(1.3); }
 
     .job-head {
       display: flex;
       flex-wrap: wrap;
+      align-items: baseline;
       justify-content: space-between;
-      gap: 0.4rem 1rem;
-      margin-bottom: 0.25rem;
+      gap: 0.35rem 1.25rem;
+      margin-bottom: 0.2rem;
     }
 
     .job-head h3 {
       margin: 0;
       font-family: var(--display);
-      font-size: 1.1rem;
-      letter-spacing: -0.02em;
+      font-size: 1.35rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
     }
 
     .when {
-      color: var(--muted);
-      font-size: 0.84rem;
+      font-family: var(--display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--fog);
     }
 
     .job-role {
-      margin: 0;
-      color: var(--muted);
-      font-size: 0.92rem;
+      margin: 0 0 1rem;
+      color: var(--live);
+      font-size: 0.98rem;
     }
 
-    .job-role + .blocks { margin-top: 1rem; }
+    .streams { display: grid; gap: 1.15rem; }
 
-    .blocks {
-      display: grid;
-      gap: 0.85rem;
+    @media (min-width: 860px) {
+      .streams { grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
     }
 
-    @media (min-width: 800px) {
-      .blocks { grid-template-columns: repeat(3, 1fr); }
-    }
-
-    .block {
-      background: var(--surface-2);
+    .stream {
+      padding: 0.9rem;
       border: 1px solid var(--line);
-      border-radius: 14px;
-      padding: 0.95rem 0.9rem;
+      background: rgba(7, 42, 54, 0.45);
+      transition: border-color 0.25s ease, transform 0.25s var(--ease);
     }
 
-    .block-head {
-      display: flex;
-      align-items: center;
-      gap: 0.55rem;
-      margin-bottom: 0.55rem;
+    .stream:hover {
+      border-color: rgba(94, 184, 255, 0.35);
+      transform: translateY(-2px);
     }
 
-    .block-head img {
-      width: 28px;
-      height: 28px;
-      border-radius: 7px;
-    }
-
-    .block-head h4 {
-      margin: 0;
+    .stream h4 {
+      margin: 0 0 0.5rem;
+      font-family: var(--display);
       font-size: 0.92rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      color: var(--paper);
     }
 
-    .list {
+    .stream ul {
       margin: 0;
       padding-left: 1.05rem;
-      color: var(--muted);
-      font-size: 0.88rem;
+      color: var(--fog);
+      font-size: 0.9rem;
     }
 
-    .list li { margin: 0.28rem 0; }
+    .stream li { margin: 0.3rem 0; }
 
-    .stack-groups {
+    .place {
       display: grid;
-      gap: 0.85rem;
+      gap: 1.5rem;
+      align-items: center;
     }
 
     @media (min-width: 800px) {
-      .stack-groups { grid-template-columns: repeat(2, 1fr); }
+      .place {
+        grid-template-columns: 1.2fr 1fr;
+        gap: 2.5rem;
+      }
+    }
+
+    .place-visual {
+      position: relative;
+      min-height: 220px;
+      overflow: hidden;
+      background: var(--deep);
+      border: 1px solid var(--line);
+      box-shadow: 0 0 0 1px rgba(26, 212, 165, 0.08), 0 24px 50px rgba(0, 0, 0, 0.35);
+    }
+
+    .place-visual img {
+      width: 100%;
+      height: 100%;
+      min-height: 220px;
+      object-fit: cover;
+      filter: saturate(1.1) brightness(0.88);
+      transition: transform 0.8s var(--ease), filter 0.4s ease;
+    }
+
+    .place:hover .place-visual img {
+      transform: scale(1.05);
+      filter: saturate(1.2) brightness(0.98);
+    }
+
+    .place-visual::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(135deg, rgba(3, 21, 28, 0.45), transparent 55%),
+        linear-gradient(0deg, rgba(255, 94, 77, 0.12), transparent 40%);
+      pointer-events: none;
+    }
+
+    .place blockquote {
+      margin: 0;
+      font-size: 1.15rem;
+      font-style: italic;
+      color: var(--paper);
+      line-height: 1.5;
+      border-left: 3px solid var(--live);
+      padding-left: 1rem;
+    }
+
+    .place cite {
+      display: block;
+      margin-top: 1rem;
+      font-family: var(--display);
+      font-size: 0.78rem;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    .stack-grid {
+      display: grid;
+      gap: 1.75rem;
+    }
+
+    @media (min-width: 720px) {
+      .stack-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    .stack-group {
+      padding: 1rem;
+      border: 1px solid var(--line);
+      background: linear-gradient(160deg, rgba(14, 58, 72, 0.55), rgba(3, 21, 28, 0.2));
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, transform 0.25s var(--ease);
+    }
+
+    .stack-group:hover {
+      border-color: rgba(26, 212, 165, 0.4);
+      box-shadow: 0 0 36px rgba(26, 212, 165, 0.1);
+      transform: translateY(-3px);
     }
 
     .stack-group h3 {
       margin: 0 0 0.75rem;
-      font-size: 0.95rem;
-      color: var(--muted);
-      font-weight: 600;
+      font-family: var(--display);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--fog);
     }
 
     .stack-group img {
       width: 100%;
-      max-width: 100%;
       height: auto;
-      display: block;
     }
 
-    .contact-grid {
+    .contact-list {
       display: grid;
-      gap: 0.75rem;
+      gap: 0.55rem;
     }
 
     @media (min-width: 720px) {
-      .contact-grid { grid-template-columns: repeat(3, 1fr); }
+      .contact-list { grid-template-columns: repeat(2, 1fr); }
     }
 
-    .contact-card {
+    .contact-link {
       display: flex;
       flex-direction: column;
-      gap: 0.35rem;
-      padding: 1.15rem 1.1rem;
-      border-radius: var(--radius);
-      border: 1px solid var(--line);
-      background: var(--surface);
-      color: var(--text);
+      gap: 0.2rem;
+      padding: 1.1rem 0.85rem;
+      border: 1px solid transparent;
+      border-bottom: 1px solid var(--line);
+      color: var(--paper);
       text-decoration: none;
-      transition: border-color 0.15s ease, transform 0.15s ease;
+      transition: padding-left 0.25s var(--ease), border-color 0.2s ease, background 0.2s ease;
     }
 
-    .contact-card:hover {
-      border-color: rgba(78, 161, 255, 0.45);
+    .contact-link:hover {
+      padding-left: 1.1rem;
+      border-color: rgba(26, 212, 165, 0.35);
+      background: var(--live-dim);
       text-decoration: none;
-      transform: translateY(-2px);
+      color: var(--paper);
     }
 
-    .contact-card small {
-      color: var(--muted);
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-    }
-
-    .contact-card strong {
+    .contact-link small {
       font-family: var(--display);
-      font-size: 1.02rem;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--fog);
+    }
+
+    .contact-link strong {
+      font-family: var(--display);
+      font-size: 1.15rem;
+      font-weight: 700;
       letter-spacing: -0.02em;
     }
 
     footer {
-      margin-top: 2rem;
-      padding-top: 1.25rem;
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 1.5rem 1.25rem 2.5rem;
       border-top: 1px solid var(--line);
-      color: var(--muted);
-      font-size: 0.85rem;
+      color: var(--fog);
+      font-size: 0.88rem;
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-      gap: 0.5rem;
+      gap: 0.5rem 1.5rem;
+    }
+
+    @media (min-width: 760px) {
+      footer { padding-left: 2rem; padding-right: 2rem; }
+    }
+
+    footer .mono {
+      font-family: var(--display);
+      font-weight: 600;
+      letter-spacing: 0.02em;
     }
   </style>
 </head>
 <body>
-  <div class="bg" aria-hidden="true"></div>
+  <div class="sky" aria-hidden="true"></div>
 
-  <div class="wrap">
-    <nav class="nav reveal">
-      <a class="logo" href="#top">glistand</a>
+  <div class="page">
+    <nav class="nav" aria-label="Основная навигация">
+      <a class="nav-brand" href="#top">glis<span>tand</span></a>
       <ul class="nav-links">
         <li><a href="#about">О себе</a></li>
         <li><a href="#work">Опыт</a></li>
+        <li><a href="#place">Место</a></li>
         <li><a href="#stack">Стек</a></li>
         <li><a href="#contact">Контакты</a></li>
       </ul>
     </nav>
 
-    <header class="hero reveal" id="top">
-      <img class="avatar" src="assets/avatar.png" alt="Рома Пригодич" width="148" height="148" />
-      <div>
-        <p class="eyebrow">Открыт к задачам до октября 2026</p>
-        <h1>Рома Пригодич</h1>
-        <p class="lead">DevOps-инженер с выполнением backend-задач. CI/CD, Kubernetes, VPN и мониторинг — плюс Java, Go и Python.</p>
+    <header class="hero" id="top">
+      <div class="hero-media">
+        <img class="portrait" src="assets/avatar.png" alt="Рома Пригодич" width="520" height="640" />
+      </div>
+      <div class="hero-fade" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <p class="hero-place">Беларусь · DevOps &amp; Backend</p>
+        <h1 data-kinetic>Рома Пригодич</h1>
+        <p class="hero-lead">Собираю платформы, которые не мешают команде: CI/CD, Kubernetes, VPN и мониторинг — плюс Java, Go и Python, когда нужна доставка до кода.</p>
         <div class="cta">
-          <a class="btn primary" href="tel:+375298357938">
-            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.8 19.8 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.35 1.9.66 2.8a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.31 1.84.53 2.8.66A2 2 0 0 1 22 16.92z"/></svg>
-            Позвонить
-          </a>
-          <a class="btn" href="https://t.me/G_l_s_t_n_d">Telegram</a>
+          <a class="btn primary" href="https://t.me/G_l_s_t_n_d">Написать в Telegram</a>
+          <a class="btn" href="tel:+375298357938">Позвонить</a>
           <a class="btn" href="https://github.com/Glistand">GitHub</a>
         </div>
       </div>
     </header>
 
-    <section class="stats reveal" aria-label="Кратко">
-      <div class="stat"><b>2</b><span>работы параллельно</span></div>
-      <div class="stat"><b>1.5+</b><span>года в DevOps</span></div>
-      <div class="stat"><b>15+</b><span>технологий в стеке</span></div>
-      <div class="stat"><b>BY</b><span>Беларусь</span></div>
-    </section>
+    <main class="shell">
+      <hr class="rail reveal" aria-hidden="true" />
 
-    <section class="section reveal" id="about">
-      <div class="section-head">
-        <h2>Чем занимаюсь</h2>
-        <span>фокус</span>
-      </div>
-      <div class="bento">
-        <article class="card wide">
-          <div class="hi-icon"><img src="https://skillicons.dev/icons?i=kubernetes" alt="" /></div>
-          <h3>Платформы и GitOps</h3>
-          <p>Кластеры Kubernetes, виртуальные машины, полный CI/CD и выкат через Argo CD.</p>
-        </article>
-        <article class="card">
-          <div class="hi-icon"><img src="https://skillicons.dev/icons?i=linux" alt="" /></div>
-          <h3>Доступы</h3>
-          <p>NetBird VPN, политики и закрытые тестовые контуры.</p>
-        </article>
-        <article class="card">
-          <div class="hi-icon"><img src="https://skillicons.dev/icons?i=docker" alt="" /></div>
-          <h3>Delivery</h3>
-          <p>Registry, Harbor + Trivy, сборки Android и desktop.</p>
-        </article>
-        <article class="card wide">
-          <div class="hi-icon"><img src="https://skillicons.dev/icons?i=java" alt="" /></div>
-          <h3>Backend</h3>
-          <p>Java / Go / Python: миграции, оптимизации и сервисы под нагрузку.</p>
-        </article>
-      </div>
-    </section>
+      <section class="reveal" id="about" aria-labelledby="about-title">
+        <span class="section-label">О себе</span>
+        <h2 id="about-title">Инфраструктура как ремесло</h2>
+        <p class="section-intro">Мне 21. Работаю как DevOps с backend-задачами: от кластера и доступов до миграций сервисов и парсеров. Открыт к задачам до октября 2026.</p>
 
-    <section class="section reveal" id="work">
-      <div class="section-head">
-        <h2>Опыт</h2>
-        <span>2025 — 2026</span>
-      </div>
-
-      <article class="job">
-        <div class="job-head">
-          <h3>ИРЦ БЖД</h3>
-          <span class="when">июль 2026 — октябрь 2026</span>
-        </div>
-        <p class="job-role">DevOps-инженер</p>
-      </article>
-
-      <article class="job">
-        <div class="job-head">
-          <h3>Balinasoft</h3>
-          <span class="when">май 2025 — октябрь 2026</span>
-        </div>
-        <p class="job-role">DevOps-инженер с выполнением backend-задач</p>
-
-        <div class="blocks">
-          <div class="block">
-            <div class="block-head">
-              <img src="https://skillicons.dev/icons?i=kubernetes" alt="" />
-              <h4>Платформа и GitOps</h4>
-            </div>
-            <ul class="list">
-              <li>Настройка Kubernetes-кластера и виртуальных машин</li>
-              <li>Полный CI/CD с GitOps и Argo CD</li>
-              <li>Реплицированная MySQL и мониторинг Grafana</li>
-            </ul>
+        <div class="focus-grid">
+          <div class="focus-prose">
+            <p>Сейчас веду две линии параллельно: <strong>ИРЦ БЖД</strong> и <strong>Balinasoft</strong>. На одной стороне — автоматизация и инфраструктура для большой организации, на другой — полный цикл платформы: GitOps, закрытые контуры, observability и код.</p>
+            <p>Люблю, когда пайплайн предсказуем, тестовый контур закрыт за VPN, а мониторинг отвечает раньше, чем пользователь.</p>
           </div>
+          <ul class="focus-list">
+            <li>
+              <h3>Платформы и GitOps</h3>
+              <p>Kubernetes, ВМ, полный CI/CD и выкат через Argo CD.</p>
+            </li>
+            <li>
+              <h3>Доступы и контуры</h3>
+              <p>NetBird VPN, политики, закрытые тестовые окружения.</p>
+            </li>
+            <li>
+              <h3>Delivery</h3>
+              <p>Registry, Harbor + Trivy, сборки Android и desktop.</p>
+            </li>
+            <li>
+              <h3>Backend</h3>
+              <p>Java / Go / Python: миграции, оптимизации, сервисы под нагрузку.</p>
+            </li>
+          </ul>
+        </div>
 
-          <div class="block">
-            <div class="block-head">
-              <img src="https://skillicons.dev/icons?i=linux" alt="" />
-              <h4>Инфраструктура</h4>
+        <div class="metrics" aria-label="Кратко">
+          <div class="metric"><b data-count="2" data-suffix="">0</b><span>работы параллельно</span></div>
+          <div class="metric"><b data-count="1.5" data-suffix="+">0</b><span>года в DevOps</span></div>
+          <div class="metric"><b data-count="15" data-suffix="+">0</b><span>технологий в стеке</span></div>
+          <div class="metric"><b data-static="BY">BY</b><span>Беларусь</span></div>
+        </div>
+      </section>
+
+      <hr class="rail reveal" aria-hidden="true" />
+
+      <section class="reveal" id="work" aria-labelledby="work-title">
+        <span class="section-label">Опыт</span>
+        <h2 id="work-title">Где уже собирал системы</h2>
+        <p class="section-intro">2025–2026: от платформы и VPN до миграций Java и проектирования Go-микросервисов.</p>
+
+        <div class="jobs">
+          <article class="job">
+            <div class="job-head">
+              <h3>ИРЦ БЖД</h3>
+              <span class="when">июль 2026 — октябрь 2026</span>
             </div>
-            <ul class="list">
-              <li>Self-hosted NetBird VPN: доступы и политики</li>
-              <li>Перенос проектов между VPS и внутренними серверами</li>
-              <li>Docker registry / Harbor + Trivy</li>
-              <li>Закрытие тестовых окружений за VPN</li>
-              <li>CI для Android и desktop (Windows / Linux / macOS)</li>
-            </ul>
+            <p class="job-role">DevOps-инженер</p>
+            <p style="margin:0;color:var(--fog);font-size:0.95rem">Автоматизация, инфраструктура и сопровождение в контуре Белорусской железной дороги.</p>
+          </article>
+
+          <article class="job">
+            <div class="job-head">
+              <h3>Balinasoft</h3>
+              <span class="when">май 2025 — октябрь 2026</span>
+            </div>
+            <p class="job-role">DevOps-инженер с выполнением backend-задач</p>
+
+            <div class="streams">
+              <div class="stream">
+                <h4>Платформа и GitOps</h4>
+                <ul>
+                  <li>Настройка Kubernetes-кластера и виртуальных машин</li>
+                  <li>Полный CI/CD с GitOps и Argo CD</li>
+                  <li>Реплицированная MySQL и мониторинг Grafana</li>
+                </ul>
+              </div>
+              <div class="stream">
+                <h4>Инфраструктура</h4>
+                <ul>
+                  <li>Self-hosted NetBird VPN: доступы и политики</li>
+                  <li>Перенос проектов между VPS и внутренними серверами</li>
+                  <li>Docker registry / Harbor + Trivy</li>
+                  <li>Закрытие тестовых окружений за VPN</li>
+                  <li>CI для Android и desktop (Windows / Linux / macOS)</li>
+                </ul>
+              </div>
+              <div class="stream">
+                <h4>Backend и доставка</h4>
+                <ul>
+                  <li>Миграция сервисов Java 11 → 17</li>
+                  <li>Проектирование перехода монолита на Go-микросервисы</li>
+                  <li>Разработка и оптимизация (в т.ч. N+1)</li>
+                  <li>DNS, Nginx, SSL через Certbot</li>
+                  <li>Парсер на Python для наполнения сайта</li>
+                </ul>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <hr class="rail reveal" aria-hidden="true" />
+
+      <section class="reveal" id="place" aria-labelledby="place-title">
+        <span class="section-label">Место</span>
+        <h2 id="place-title">Сигнал с севера</h2>
+        <div class="place">
+          <div class="place-visual">
+            <img src="assets/baltic-teal-atmosphere.jpg" alt="Ночной городской пейзаж в бирюзовом тумане — атмосфера Беларуси" width="960" height="540" loading="lazy" />
           </div>
-
-          <div class="block">
-            <div class="block-head">
-              <img src="https://skillicons.dev/icons?i=golang" alt="" />
-              <h4>Backend и доставка</h4>
-            </div>
-            <ul class="list">
-              <li>Миграция сервисов Java 11 → 17</li>
-              <li>Проектирование перехода монолита на Go-микросервисы</li>
-              <li>Разработка и оптимизация (в т.ч. N+1)</li>
-              <li>DNS, Nginx, SSL через Certbot</li>
-              <li>Парсер на Python для наполнения сайта</li>
-            </ul>
+          <div>
+            <blockquote>
+              «Автоматизация — это когда код делает работу за тебя, а ты занимаешься более интересными вещами»
+            </blockquote>
+            <cite>Рома Пригодич · Беларусь</cite>
+            <p style="margin:1.25rem 0 0;color:var(--fog);font-size:0.95rem">VMware vCenter / ESXi, Grafana Stack, NetBird — инструменты, с которыми живу каждый день. Удобнее всего писать в Telegram; обычно отвечаю в течение дня.</p>
           </div>
         </div>
-      </article>
-    </section>
+      </section>
 
-    <section class="section reveal" id="stack">
-      <div class="section-head">
-        <h2>Стек</h2>
-        <span>брендовые иконки</span>
-      </div>
-      <div class="stack-groups">
-        <article class="card stack-group">
-          <h3>Infra &amp; Delivery</h3>
-          <img src="https://skillicons.dev/icons?i=kubernetes,docker,gitlab,github,linux,nginx,bash,helm" alt="Kubernetes, Docker, GitLab, GitHub, Linux, Nginx, Bash, Helm" />
-        </article>
-        <article class="card stack-group">
-          <h3>Observability &amp; Data</h3>
-          <img src="https://skillicons.dev/icons?i=grafana,prometheus,mysql,postgres" alt="Grafana, Prometheus, MySQL, PostgreSQL" />
-        </article>
-        <article class="card stack-group">
-          <h3>Languages</h3>
-          <img src="https://skillicons.dev/icons?i=java,spring,golang,python,fastapi" alt="Java, Spring, Go, Python, FastAPI" />
-        </article>
-        <article class="card stack-group">
-          <h3>Platforms</h3>
-          <img src="https://skillicons.dev/icons?i=androidstudio,windows,apple,vscode" alt="Android, Windows, macOS, VS Code" />
-        </article>
-      </div>
-    </section>
+      <hr class="rail reveal" aria-hidden="true" />
 
-    <section class="section reveal" id="contact">
-      <div class="section-head">
-        <h2>Контакты</h2>
-        <span>написать / позвонить</span>
-      </div>
-      <div class="contact-grid">
-        <a class="contact-card" href="tel:+375298357938">
-          <small>Телефон</small>
-          <strong>+375 29 835-79-38</strong>
-        </a>
-        <a class="contact-card" href="https://t.me/G_l_s_t_n_d">
-          <small>Telegram</small>
-          <strong>@G_l_s_t_n_d</strong>
-        </a>
-        <a class="contact-card" href="https://github.com/Glistand">
-          <small>GitHub</small>
-          <strong>Glistand</strong>
-        </a>
-      </div>
-    </section>
+      <section class="reveal" id="stack" aria-labelledby="stack-title">
+        <span class="section-label">Стек</span>
+        <h2 id="stack-title">Чем пользуюсь</h2>
+        <p class="section-intro">Инфра, observability, языки и платформы сборки — без лишней витрины.</p>
+        <div class="stack-grid">
+          <article class="stack-group">
+            <h3>Infra &amp; Delivery</h3>
+            <img src="https://skillicons.dev/icons?i=kubernetes,docker,gitlab,github,linux,nginx,bash,helm" alt="Kubernetes, Docker, GitLab, GitHub, Linux, Nginx, Bash, Helm" loading="lazy" />
+          </article>
+          <article class="stack-group">
+            <h3>Observability &amp; Data</h3>
+            <img src="https://skillicons.dev/icons?i=grafana,prometheus,mysql,postgres" alt="Grafana, Prometheus, MySQL, PostgreSQL" loading="lazy" />
+          </article>
+          <article class="stack-group">
+            <h3>Languages</h3>
+            <img src="https://skillicons.dev/icons?i=java,spring,golang,python,fastapi" alt="Java, Spring, Go, Python, FastAPI" loading="lazy" />
+          </article>
+          <article class="stack-group">
+            <h3>Platforms</h3>
+            <img src="https://skillicons.dev/icons?i=androidstudio,windows,apple,vscode" alt="Android, Windows, macOS, VS Code" loading="lazy" />
+          </article>
+        </div>
+      </section>
+
+      <hr class="rail reveal" aria-hidden="true" />
+
+      <section class="reveal" id="contact" aria-labelledby="contact-title">
+        <span class="section-label">Контакты</span>
+        <h2 id="contact-title">Связаться</h2>
+        <p class="section-intro">Открыт к диалогу по DevOps, инфраструктуре и интересным задачам.</p>
+        <div class="contact-list">
+          <a class="contact-link" href="tel:+375298357938">
+            <small>Телефон</small>
+            <strong>+375 29 835-79-38</strong>
+          </a>
+          <a class="contact-link" href="https://t.me/G_l_s_t_n_d">
+            <small>Telegram</small>
+            <strong>@G_l_s_t_n_d</strong>
+          </a>
+          <a class="contact-link" href="https://github.com/Glistand">
+            <small>GitHub</small>
+            <strong>Glistand</strong>
+          </a>
+          <a class="contact-link" href="mailto:pryhodzichr@gmail.com">
+            <small>Email</small>
+            <strong>pryhodzichr@gmail.com</strong>
+          </a>
+        </div>
+      </section>
+    </main>
 
     <footer>
-      <span>© <span id="y"></span> Рома Пригодич</span>
+      <span class="mono">© <span id="y"></span> Рома Пригодич</span>
       <span>+375 29 835-79-38</span>
     </footer>
   </div>
@@ -696,20 +1055,111 @@
     document.getElementById("y").textContent = String(new Date().getFullYear());
 
     (function () {
+      var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var hero = document.querySelector(".hero");
+      var root = document.documentElement;
+      var portrait = document.querySelector(".hero-media img.portrait");
+      var kinetic = document.querySelector("[data-kinetic]");
+
+      /* Kinetic title */
+      if (kinetic) {
+        var text = kinetic.textContent;
+        kinetic.textContent = "";
+        for (var i = 0; i < text.length; i++) {
+          var ch = text.charAt(i);
+          var span = document.createElement("span");
+          span.className = "char" + (ch === " " ? " space" : "");
+          span.textContent = ch === " " ? "\u00a0" : ch;
+          span.style.transitionDelay = (0.18 + i * 0.035) + "s";
+          kinetic.appendChild(span);
+        }
+      }
+
+      function ready() {
+        if (hero) hero.classList.add("is-ready");
+      }
+
+      if (reduce) {
+        ready();
+      } else {
+        requestAnimationFrame(function () {
+          requestAnimationFrame(ready);
+        });
+      }
+
+      /* Cursor spotlight + portrait parallax */
+      if (!reduce) {
+        var px = 0, py = 0, tx = 0, ty = 0;
+        var mx = 70, my = 20, tmx = 70, tmy = 20;
+        var scrolling = false;
+
+        window.addEventListener("pointermove", function (e) {
+          tmx = (e.clientX / window.innerWidth) * 100;
+          tmy = (e.clientY / window.innerHeight) * 100;
+          tx = (e.clientX / window.innerWidth - 0.5) * -18;
+          ty = (e.clientY / window.innerHeight - 0.5) * -10;
+        }, { passive: true });
+
+        window.addEventListener("scroll", function () {
+          scrolling = true;
+          var y = window.scrollY || 0;
+          ty = Math.min(24, y * 0.04);
+        }, { passive: true });
+
+        function tick() {
+          mx += (tmx - mx) * 0.08;
+          my += (tmy - my) * 0.08;
+          px += (tx - px) * 0.08;
+          py += (ty - py) * 0.08;
+          root.style.setProperty("--mx", mx.toFixed(2) + "%");
+          root.style.setProperty("--my", my.toFixed(2) + "%");
+          if (portrait && hero && hero.classList.contains("is-ready")) {
+            portrait.style.setProperty("--px", px.toFixed(2) + "px");
+            portrait.style.setProperty("--py", py.toFixed(2) + "px");
+          }
+          if (scrolling) scrolling = false;
+          requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      /* Reveal + count-up */
       var nodes = document.querySelectorAll(".reveal");
+      function countUp(el) {
+        var target = parseFloat(el.getAttribute("data-count"));
+        var suffix = el.getAttribute("data-suffix") || "";
+        if (isNaN(target)) return;
+        var start = performance.now();
+        var dur = 1100;
+        function frame(now) {
+          var t = Math.min(1, (now - start) / dur);
+          var eased = 1 - Math.pow(1 - t, 3);
+          var val = target * eased;
+          el.textContent = (target % 1 !== 0 ? val.toFixed(1) : String(Math.round(val))) + suffix;
+          if (t < 1) requestAnimationFrame(frame);
+        }
+        requestAnimationFrame(frame);
+      }
+
       if (!nodes.length) return;
-      if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      if (reduce) {
         nodes.forEach(function (el) { el.classList.add("in"); });
+        document.querySelectorAll("[data-count]").forEach(function (el) {
+          el.textContent = el.getAttribute("data-count") + (el.getAttribute("data-suffix") || "");
+        });
         return;
       }
+
       var io = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("in");
-            io.unobserve(entry.target);
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("in");
+          if (entry.target.id === "about" || entry.target.querySelector) {
+            entry.target.querySelectorAll("[data-count]").forEach(countUp);
           }
+          io.unobserve(entry.target);
         });
-      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+      }, { threshold: 0.14, rootMargin: "0px 0px -40px 0px" });
       nodes.forEach(function (el) { io.observe(el); });
     })();
   </script>
