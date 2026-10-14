@@ -13,7 +13,8 @@
   <title>Рома Пригодич — DevOps &amp; Backend</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,400;7..72,500;7..72,600&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
+  <!-- Unbounded + Source Serif 4: SIL OFL via Google Fonts, full Cyrillic -->
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600&family=Unbounded:wght@600;700;900&display=swap" rel="stylesheet" />
   <style>
     :root {
       --abyss: #03151c;
@@ -28,8 +29,8 @@
       --beam: #5eb8ff;
       --beam-dim: rgba(94, 184, 255, 0.14);
       --line: rgba(232, 247, 244, 0.1);
-      --display: "Syne", sans-serif;
-      --body: "Literata", Georgia, serif;
+      --display: "Unbounded", system-ui, sans-serif;
+      --body: "Source Serif 4", Georgia, "Times New Roman", serif;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
       --mx: 70%;
       --my: 20%;
@@ -107,7 +108,7 @@
 
     .nav-brand {
       font-family: var(--display);
-      font-weight: 800;
+      font-weight: 900;
       font-size: 1.05rem;
       letter-spacing: -0.03em;
       color: var(--paper);
@@ -164,6 +165,7 @@
     /* —— Hero —— */
     .hero {
       position: relative;
+      isolation: isolate;
       min-height: min(88svh, 780px);
       display: grid;
       align-items: center;
@@ -171,30 +173,19 @@
       overflow: hidden;
     }
 
-    .hero-media {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      will-change: transform;
-    }
-
-    .hero-media img.portrait {
+    .hero-portrait {
       position: absolute;
       right: -12%;
       bottom: 0;
+      z-index: 5; /* firmly above orbits + fade */
       width: min(88vw, 420px);
       height: auto;
       max-height: 58%;
       object-fit: cover;
       object-position: center 12%;
-      mask-image:
-        linear-gradient(90deg, transparent 0%, black 35%, black 100%),
-        linear-gradient(180deg, transparent 0%, black 25%, black 75%, transparent 100%);
-      -webkit-mask-image:
-        linear-gradient(90deg, transparent 0%, black 35%, black 100%),
-        linear-gradient(180deg, transparent 0%, black 25%, black 75%, transparent 100%);
-      mask-composite: intersect;
-      -webkit-mask-composite: source-in;
+      /* soft-fade only the very bottom — keep face/torso fully opaque */
+      mask-image: linear-gradient(180deg, black 0%, black 90%, transparent 100%);
+      -webkit-mask-image: linear-gradient(180deg, black 0%, black 90%, transparent 100%);
       filter: saturate(1.12) contrast(1.05);
       opacity: 0;
       transform: translate3d(24px, 0, 0);
@@ -203,7 +194,7 @@
       will-change: transform;
     }
 
-    .hero.is-ready .hero-media img.portrait {
+    .hero.is-ready .hero-portrait {
       opacity: 1;
       transform: translate3d(var(--px, 0px), var(--py, 0px), 0);
     }
@@ -214,7 +205,8 @@
       background:
         linear-gradient(180deg, rgba(3, 21, 28, 0.55) 0%, rgba(3, 21, 28, 0.15) 40%, rgba(3, 21, 28, 0.82) 100%),
         linear-gradient(90deg, var(--abyss) 0%, rgba(3, 21, 28, 0.88) 55%, rgba(3, 21, 28, 0.4) 100%);
-      z-index: 1;
+      z-index: 0;
+      pointer-events: none;
     }
 
     @media (min-width: 760px) {
@@ -223,25 +215,38 @@
           linear-gradient(90deg, var(--abyss) 0%, rgba(3, 21, 28, 0.92) 36%, rgba(3, 21, 28, 0.28) 68%, rgba(3, 21, 28, 0.55) 100%),
           linear-gradient(180deg, transparent 55%, var(--abyss) 100%);
       }
-      .hero-media img.portrait {
+      .hero-portrait {
         right: 2%;
         bottom: -2%;
         width: min(46vw, 500px);
         max-height: 90%;
-        mask-image: linear-gradient(90deg, transparent 0%, black 18%, black 100%),
-          linear-gradient(180deg, black 72%, transparent 100%);
-        -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 18%, black 100%),
-          linear-gradient(180deg, black 72%, transparent 100%);
+        mask-image: linear-gradient(180deg, black 0%, black 92%, transparent 100%);
+        -webkit-mask-image: linear-gradient(180deg, black 0%, black 92%, transparent 100%);
       }
+    }
+
+    /* on small screens keep orbits subtle and behind; hide innermost clutter */
+    @media (max-width: 759px) {
+      .orbit-system {
+        opacity: 0.85;
+        right: -18%;
+        top: 58%;
+      }
+      .hero.is-ready .orbit-system { opacity: 0.85; }
     }
 
     .hero-copy {
       position: relative;
-      z-index: 2;
+      z-index: 6;
       max-width: 1180px;
       width: 100%;
       margin: 0 auto;
       padding: 1.5rem 1.25rem 0;
+      pointer-events: none;
+    }
+
+    .hero-copy a {
+      pointer-events: auto;
     }
 
     @media (min-width: 760px) {
@@ -281,7 +286,7 @@
       margin: 0;
       max-width: 14ch;
       font-family: var(--display);
-      font-weight: 800;
+      font-weight: 900;
       font-size: clamp(2.75rem, 9vw, 5.4rem);
       letter-spacing: -0.055em;
       line-height: 0.95;
@@ -372,6 +377,145 @@
       box-shadow: 0 12px 32px rgba(255, 94, 77, 0.38);
     }
 
+    /* —— Hero orbital stack (~9 rings outside the portrait) —— */
+    .orbit-system {
+      position: absolute;
+      right: -8%;
+      top: 46%;
+      width: min(96vw, 460px);
+      height: min(96vw, 460px);
+      transform: translateY(-50%);
+      z-index: 1; /* below .hero-portrait (z-index 5) */
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1.1s var(--ease);
+      /* large hole over portrait so icons only appear in the outer halo */
+      mask-image:
+        radial-gradient(circle at 58% 40%, transparent 0 52%, black 58%, black 94%, transparent 100%);
+      -webkit-mask-image:
+        radial-gradient(circle at 58% 40%, transparent 0 52%, black 58%, black 94%, transparent 100%);
+    }
+
+    .hero.is-ready .orbit-system { opacity: 1; }
+
+    @media (min-width: 760px) {
+      .orbit-system {
+        right: -2%;
+        top: 50%;
+        width: min(58vw, 720px);
+        height: min(58vw, 720px);
+        mask-image:
+          linear-gradient(90deg, transparent 0%, black 12%, black 100%),
+          radial-gradient(circle at 55% 38%, transparent 0 46%, black 52%, black 92%, transparent 98%);
+        -webkit-mask-image:
+          linear-gradient(90deg, transparent 0%, black 12%, black 100%),
+          radial-gradient(circle at 55% 38%, transparent 0 46%, black 52%, black 92%, transparent 98%);
+        mask-composite: intersect;
+        -webkit-mask-composite: source-in;
+      }
+    }
+
+    .orbit-ring {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: var(--size);
+      height: var(--size);
+      margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
+      border-radius: 50%;
+      border: 1px solid rgba(26, 212, 165, 0.14);
+      box-shadow: inset 0 0 24px rgba(94, 184, 255, 0.04);
+      animation: orbit-spin var(--dur) linear infinite;
+      animation-direction: var(--spin-dir, normal);
+    }
+
+    .orbit-ring:nth-child(3n) {
+      border-color: rgba(255, 94, 77, 0.16);
+    }
+
+    .orbit-ring:nth-child(3n + 1) {
+      border-color: rgba(94, 184, 255, 0.14);
+    }
+
+    /* 90° geometric ticks on alternating rings */
+    .orbit-ring--ticks::before {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 2px;
+      left: -4px;
+      top: calc(50% - 1px);
+      background: var(--pulse);
+      opacity: 0.75;
+      box-shadow: var(--size) 0 0 var(--pulse);
+    }
+
+    .orbit-ring--ticks::after {
+      content: "";
+      position: absolute;
+      width: 2px;
+      height: 8px;
+      left: calc(50% - 1px);
+      top: -4px;
+      background: var(--live);
+      opacity: 0.75;
+      box-shadow: 0 var(--size) 0 var(--live);
+    }
+
+    .orbit-slot {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+      transform: rotate(var(--start)) translateY(calc(var(--size) / -2));
+    }
+
+    .orbit-face {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 28px;
+      height: 28px;
+      max-width: none;
+      margin: -14px 0 0 -14px;
+      border-radius: 7px;
+      background: rgba(3, 21, 28, 0.82);
+      border: 1px solid rgba(232, 247, 244, 0.16);
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 12px rgba(26, 212, 165, 0.12);
+      animation: orbit-spin-rev var(--dur) linear infinite;
+      animation-direction: var(--spin-dir, normal);
+      object-fit: contain;
+    }
+
+    @media (min-width: 760px) {
+      .orbit-face {
+        width: 34px;
+        height: 34px;
+        margin: -17px 0 0 -17px;
+      }
+    }
+
+    @keyframes orbit-spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes orbit-spin-rev {
+      to { transform: rotate(-360deg); }
+    }
+
+    .orbit-system.is-static .orbit-ring,
+    .orbit-system.is-static .orbit-face {
+      animation: none !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .orbit-ring,
+      .orbit-face {
+        animation: none !important;
+      }
+    }
+
     /* —— Content shell —— */
     .shell {
       max-width: 1180px;
@@ -417,7 +561,7 @@
       .hero-place,
       .hero-lead,
       .cta,
-      .hero-media img.portrait,
+      .hero-portrait,
       .hero h1 .char,
       .rail {
         opacity: 1 !important;
@@ -464,7 +608,7 @@
     h2 {
       margin: 0 0 0.75rem;
       font-family: var(--display);
-      font-weight: 800;
+      font-weight: 900;
       font-size: clamp(1.65rem, 3.5vw, 2.35rem);
       letter-spacing: -0.04em;
       line-height: 1.1;
@@ -557,7 +701,7 @@
       display: block;
       font-family: var(--display);
       font-size: clamp(1.6rem, 3vw, 2.1rem);
-      font-weight: 800;
+      font-weight: 900;
       letter-spacing: -0.04em;
       color: var(--live);
       line-height: 1;
@@ -858,10 +1002,9 @@
     </nav>
 
     <header class="hero" id="top">
-      <div class="hero-media">
-        <img class="portrait" src="assets/avatar.png" alt="Рома Пригодич" width="520" height="640" />
-      </div>
       <div class="hero-fade" aria-hidden="true"></div>
+      <div class="orbit-system" id="orbit-system" aria-hidden="true"></div>
+      <img class="hero-portrait" src="assets/avatar.png" alt="Рома Пригодич" width="520" height="640" />
       <div class="hero-copy">
         <p class="hero-place">Беларусь · DevOps &amp; Backend</p>
         <h1 data-kinetic>Рома Пригодич</h1>
@@ -884,7 +1027,7 @@
 
         <div class="focus-grid">
           <div class="focus-prose">
-            <p>Сейчас веду две линии параллельно: <strong>ИРЦ БЖД</strong> и <strong>Balinasoft</strong>. На одной стороне — автоматизация и инфраструктура для большой организации, на другой — полный цикл платформы: GitOps, закрытые контуры, observability и код.</p>
+            <p>Сейчас в двух компаниях: <strong>ИРЦ БЖД</strong> и <strong>Balinasoft</strong>. В одной — автоматизация и инфраструктура для большой организации, в другой — полный цикл платформы: GitOps, закрытые контуры, observability и код.</p>
             <p>Люблю, когда пайплайн предсказуем, тестовый контур закрыт за VPN, а мониторинг отвечает раньше, чем пользователь.</p>
           </div>
           <ul class="focus-list">
@@ -908,7 +1051,7 @@
         </div>
 
         <div class="metrics" aria-label="Кратко">
-          <div class="metric"><b data-count="2" data-suffix="">0</b><span>работы параллельно</span></div>
+          <div class="metric"><b data-count="2" data-suffix="">0</b><span>компании</span></div>
           <div class="metric"><b data-count="1.5" data-suffix="+">0</b><span>года в DevOps</span></div>
           <div class="metric"><b data-count="15" data-suffix="+">0</b><span>технологий в стеке</span></div>
           <div class="metric"><b data-static="BY">BY</b><span>Беларусь</span></div>
@@ -1058,8 +1201,49 @@
       var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       var hero = document.querySelector(".hero");
       var root = document.documentElement;
-      var portrait = document.querySelector(".hero-media img.portrait");
+      var portrait = document.querySelector(".hero-portrait");
       var kinetic = document.querySelector("[data-kinetic]");
+      var orbitRoot = document.getElementById("orbit-system");
+
+      /* Hero orbital stack — 9 rings, skillicons from real stack */
+      if (orbitRoot) {
+        var icons = [
+          "kubernetes", "docker", "gitlab", "github", "linux", "nginx", "bash", "helm",
+          "grafana", "prometheus", "mysql", "postgres", "java", "spring", "golang", "python",
+          "fastapi", "androidstudio", "vscode"
+        ];
+        var iconIdx = 0;
+        for (var r = 0; r < 9; r++) {
+          /* diameters start well outside the portrait, then step outward */
+          var size = 480 + r * 28;
+          var dur = 20 + r * 5;
+          var ring = document.createElement("div");
+          ring.className = "orbit-ring" + (r % 2 === 0 ? " orbit-ring--ticks" : "");
+          ring.style.setProperty("--size", size + "px");
+          ring.style.setProperty("--dur", dur + "s");
+          if (r % 2 === 1) ring.style.setProperty("--spin-dir", "reverse");
+
+          var count = 1 + (r % 3);
+          for (var j = 0; j < count; j++) {
+            var name = icons[iconIdx % icons.length];
+            iconIdx += 1;
+            var slot = document.createElement("div");
+            slot.className = "orbit-slot";
+            slot.style.setProperty("--start", (360 / count) * j + r * 14 + "deg");
+            var img = document.createElement("img");
+            img.className = "orbit-face";
+            img.src = "https://skillicons.dev/icons?i=" + name;
+            img.alt = "";
+            img.width = 30;
+            img.height = 30;
+            img.decoding = "async";
+            slot.appendChild(img);
+            ring.appendChild(slot);
+          }
+          orbitRoot.appendChild(ring);
+        }
+        if (reduce) orbitRoot.classList.add("is-static");
+      }
 
       /* Kinetic title */
       if (kinetic) {
