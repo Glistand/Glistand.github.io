@@ -32,8 +32,6 @@
       --display: "Unbounded", system-ui, sans-serif;
       --body: "Source Serif 4", Georgia, "Times New Roman", serif;
       --ease: cubic-bezier(0.22, 1, 0.36, 1);
-      --mx: 70%;
-      --my: 20%;
     }
 
     * { box-sizing: border-box; }
@@ -59,38 +57,58 @@
       outline-offset: 3px;
     }
 
-    /* —— Atmosphere + cursor spotlight —— */
+    /* —— Atmosphere (static) + spotlight (transform-only, GPU) —— */
     .sky {
       position: fixed;
       inset: 0;
       z-index: 0;
       pointer-events: none;
       background:
-        radial-gradient(ellipse 55% 40% at var(--mx) var(--my), rgba(26, 212, 165, 0.18), transparent 55%),
-        radial-gradient(ellipse 50% 35% at calc(var(--mx) + 10%) calc(var(--my) + 15%), rgba(255, 94, 77, 0.1), transparent 50%),
+        radial-gradient(ellipse 55% 40% at 72% 18%, rgba(26, 212, 165, 0.14), transparent 55%),
+        radial-gradient(ellipse 50% 35% at 88% 32%, rgba(255, 94, 77, 0.08), transparent 50%),
         radial-gradient(ellipse 70% 45% at 80% 0%, rgba(94, 184, 255, 0.1), transparent 55%),
         linear-gradient(180deg, #052430 0%, var(--abyss) 42%, #021018 100%);
-      transition: background 0.15s linear;
     }
 
     .sky::before {
       content: "";
       position: absolute;
       inset: 0;
-      opacity: 0.5;
+      opacity: 0.48;
       background: url("assets/baltic-teal-atmosphere.jpg") center / cover no-repeat;
       mask-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.22) 38%, transparent 72%);
       -webkit-mask-image: linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.22) 38%, transparent 72%);
-      filter: saturate(1.15) hue-rotate(-8deg);
     }
 
+    /* lightweight film grain — no SVG feTurbulence */
     .sky::after {
       content: "";
       position: absolute;
       inset: 0;
-      opacity: 0.3;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
-      mix-blend-mode: overlay;
+      opacity: 0.045;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ccircle fill='%23fff' cx='12' cy='18' r='1'/%3E%3Ccircle fill='%23fff' cx='48' cy='7' r='1'/%3E%3Ccircle fill='%23fff' cx='91' cy='33' r='1'/%3E%3Ccircle fill='%23fff' cx='27' cy='62' r='1'/%3E%3Ccircle fill='%23fff' cx='73' cy='81' r='1'/%3E%3Ccircle fill='%23fff' cx='105' cy='54' r='1'/%3E%3Ccircle fill='%23fff' cx='6' cy='97' r='1'/%3E%3Ccircle fill='%23fff' cx='58' cy='110' r='1'/%3E%3C/svg%3E");
+      background-size: 120px 120px;
+      pointer-events: none;
+    }
+
+    .sky-spot {
+      position: absolute;
+      width: 55vmax;
+      height: 40vmax;
+      left: 0;
+      top: 0;
+      margin: -20vmax 0 0 -27.5vmax;
+      border-radius: 50%;
+      background:
+        radial-gradient(ellipse at 50% 50%, rgba(26, 212, 165, 0.2), transparent 62%),
+        radial-gradient(ellipse at 65% 60%, rgba(255, 94, 77, 0.1), transparent 55%);
+      transform: translate3d(70vw, 20vh, 0);
+      will-change: transform;
+      pointer-events: none;
+    }
+
+    @media (hover: none), (max-width: 759px) {
+      .sky-spot { display: none; }
     }
 
     .page { position: relative; z-index: 1; }
@@ -215,20 +233,6 @@
       pointer-events: none;
     }
 
-    .hero-avatar::before {
-      content: "";
-      position: absolute;
-      inset: -18%;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, rgba(26, 212, 165, 0.45) 0%, rgba(94, 184, 255, 0.22) 42%, transparent 72%),
-        radial-gradient(circle at 30% 20%, rgba(255, 94, 77, 0.28), transparent 55%);
-      filter: blur(22px);
-      z-index: -1;
-      opacity: 0.95;
-      pointer-events: none;
-    }
-
     .hero-portrait {
       display: block;
       width: 100%;
@@ -238,19 +242,19 @@
       border-radius: 50%;
       border: 2px solid rgba(232, 247, 244, 0.22);
       box-shadow:
-        0 0 0 1px rgba(26, 212, 165, 0.2),
-        0 12px 40px rgba(0, 0, 0, 0.45),
-        0 0 48px rgba(94, 184, 255, 0.18);
-      filter: saturate(1.1) contrast(1.04);
+        0 0 0 1px rgba(26, 212, 165, 0.18),
+        0 0 36px rgba(26, 212, 165, 0.22),
+        0 0 64px rgba(94, 184, 255, 0.16),
+        0 14px 40px rgba(0, 0, 0, 0.4);
       opacity: 0;
       transform: translate3d(16px, 0, 0) scale(0.96);
       transition: opacity 1s var(--ease), transform 1.1s var(--ease);
-      will-change: transform;
     }
 
     .hero.is-ready .hero-portrait {
       opacity: 1;
-      transform: translate3d(var(--px, 0px), var(--py, 0px), 0) scale(1);
+      transform: none;
+      transition: opacity 1s var(--ease);
     }
 
     @media (min-width: 760px) {
@@ -288,10 +292,6 @@
       }
 
       .hero-avatar { inset: 24%; }
-      .hero-avatar::before {
-        inset: -22%;
-        filter: blur(28px);
-      }
     }
 
     .hero-place {
@@ -393,7 +393,6 @@
       font-size: 0.9rem;
       letter-spacing: -0.01em;
       text-decoration: none;
-      backdrop-filter: blur(8px);
       transition: border-color 0.2s ease, background 0.2s ease, color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
     }
 
@@ -447,9 +446,14 @@
       margin: calc(var(--size) / -2) 0 0 calc(var(--size) / -2);
       border-radius: 50%;
       border: 1px solid rgba(26, 212, 165, 0.14);
-      box-shadow: inset 0 0 24px rgba(94, 184, 255, 0.04);
       animation: orbit-spin var(--dur) linear infinite;
       animation-direction: var(--spin-dir, normal);
+      animation-play-state: paused;
+    }
+
+    .orbit-system.is-live .orbit-ring,
+    .orbit-system.is-live .orbit-face {
+      animation-play-state: running;
     }
 
     .orbit-ring:nth-child(3n) {
@@ -498,17 +502,19 @@
       position: absolute;
       left: 0;
       top: 0;
-      width: 28px;
-      height: 28px;
+      width: 26px;
+      height: 26px;
       max-width: none;
-      margin: -14px 0 0 -14px;
+      margin: -13px 0 0 -13px;
       border-radius: 7px;
       background: rgba(3, 21, 28, 0.82);
       border: 1px solid rgba(232, 247, 244, 0.16);
-      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4), 0 0 12px rgba(26, 212, 165, 0.12);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
       animation: orbit-spin-rev var(--dur) linear infinite;
       animation-direction: var(--spin-dir, normal);
+      animation-play-state: paused;
       object-fit: contain;
+      content-visibility: auto;
     }
 
     @media (min-width: 760px) {
@@ -544,6 +550,11 @@
       max-width: 1180px;
       margin: 0 auto;
       padding: 0 1.25rem 4rem;
+    }
+
+    .shell > section {
+      content-visibility: auto;
+      contain-intrinsic-size: auto 520px;
     }
 
     @media (min-width: 760px) {
@@ -862,13 +873,13 @@
       height: 100%;
       min-height: 220px;
       object-fit: cover;
-      filter: saturate(1.1) brightness(0.88);
-      transition: transform 0.8s var(--ease), filter 0.4s ease;
+      opacity: 0.9;
+      transition: transform 0.8s var(--ease), opacity 0.4s ease;
     }
 
     .place:hover .place-visual img {
       transform: scale(1.05);
-      filter: saturate(1.2) brightness(0.98);
+      opacity: 1;
     }
 
     .place-visual::after {
@@ -1010,7 +1021,7 @@
   </style>
 </head>
 <body>
-  <div class="sky" aria-hidden="true"></div>
+  <div class="sky" aria-hidden="true"><div class="sky-spot" id="sky-spot"></div></div>
 
   <div class="page">
     <nav class="nav" aria-label="Основная навигация">
@@ -1039,7 +1050,7 @@
       <div class="hero-visual">
         <div class="orbit-system" id="orbit-system" aria-hidden="true"></div>
         <div class="hero-avatar">
-          <img class="hero-portrait" src="assets/avatar.png" alt="Рома Пригодич" width="520" height="520" />
+          <img class="hero-portrait" src="assets/avatar.png" alt="Рома Пригодич" width="520" height="520" decoding="async" fetchpriority="high" />
         </div>
       </div>
     </header>
@@ -1226,27 +1237,27 @@
 
     (function () {
       var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      var finePointer = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
       var hero = document.querySelector(".hero");
-      var root = document.documentElement;
-      var portrait = document.querySelector(".hero-portrait");
       var kinetic = document.querySelector("[data-kinetic]");
       var orbitRoot = document.getElementById("orbit-system");
+      var skySpot = document.getElementById("sky-spot");
 
-      /* Hero orbital stack — 9 rings; --size must be px (translateY % is relative to 0×0 slot) */
+      /* Orbits: 9 rings, pause when offscreen */
       if (orbitRoot) {
         var icons = [
           "kubernetes", "docker", "gitlab", "github", "linux", "nginx", "bash", "terraform",
           "grafana", "prometheus", "mysql", "postgres", "java", "spring", "golang", "python",
           "fastapi", "androidstudio", "vscode"
         ];
+
         function buildOrbits() {
           orbitRoot.innerHTML = "";
           var base = orbitRoot.clientWidth || 300;
           var iconIdx = 0;
           for (var r = 0; r < 9; r++) {
-            /* base is oversized orbit box; slightly tighter halo around avatar */
             var size = Math.round(base * (0.52 + r * 0.032));
-            var dur = 20 + r * 5;
+            var dur = 22 + r * 5;
             var ring = document.createElement("div");
             ring.className = "orbit-ring" + (r % 2 === 0 ? " orbit-ring--ticks" : "");
             ring.style.setProperty("--size", size + "px");
@@ -1264,8 +1275,8 @@
               img.className = "orbit-face";
               img.src = "https://skillicons.dev/icons?i=" + name;
               img.alt = "";
-              img.width = 30;
-              img.height = 30;
+              img.width = 28;
+              img.height = 28;
               img.decoding = "async";
               slot.appendChild(img);
               ring.appendChild(slot);
@@ -1274,6 +1285,7 @@
           }
           if (reduce) orbitRoot.classList.add("is-static");
         }
+
         var orbitW = 0;
         function syncOrbits() {
           buildOrbits();
@@ -1287,6 +1299,16 @@
             buildOrbits();
           }
         }, { passive: true });
+
+        if (!reduce && "IntersectionObserver" in window) {
+          new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              orbitRoot.classList.toggle("is-live", entry.isIntersecting);
+            });
+          }, { rootMargin: "40px", threshold: 0.05 }).observe(orbitRoot);
+        } else if (!reduce) {
+          orbitRoot.classList.add("is-live");
+        }
       }
 
       /* Kinetic title */
@@ -1315,40 +1337,39 @@
         });
       }
 
-      /* Cursor spotlight + portrait parallax */
-      if (!reduce) {
-        var px = 0, py = 0, tx = 0, ty = 0;
-        var mx = 70, my = 20, tmx = 70, tmy = 20;
-        var scrolling = false;
-
-        window.addEventListener("pointermove", function (e) {
-          tmx = (e.clientX / window.innerWidth) * 100;
-          tmy = (e.clientY / window.innerHeight) * 100;
-          tx = (e.clientX / window.innerWidth - 0.5) * -18;
-          ty = (e.clientY / window.innerHeight - 0.5) * -10;
-        }, { passive: true });
-
-        window.addEventListener("scroll", function () {
-          scrolling = true;
-          var y = window.scrollY || 0;
-          ty = Math.min(24, y * 0.04);
-        }, { passive: true });
+      /* Cursor glow only — avatar stays still */
+      if (!reduce && finePointer && skySpot) {
+        var sx = window.innerWidth * 0.7, sy = window.innerHeight * 0.2;
+        var tsx = sx, tsy = sy;
+        var raf = 0;
+        var idleTimer = 0;
 
         function tick() {
-          mx += (tmx - mx) * 0.08;
-          my += (tmy - my) * 0.08;
-          px += (tx - px) * 0.08;
-          py += (ty - py) * 0.08;
-          root.style.setProperty("--mx", mx.toFixed(2) + "%");
-          root.style.setProperty("--my", my.toFixed(2) + "%");
-          if (portrait && hero && hero.classList.contains("is-ready")) {
-            portrait.style.setProperty("--px", px.toFixed(2) + "px");
-            portrait.style.setProperty("--py", py.toFixed(2) + "px");
+          raf = 0;
+          sx += (tsx - sx) * 0.12;
+          sy += (tsy - sy) * 0.12;
+          skySpot.style.transform = "translate3d(" + sx.toFixed(1) + "px," + sy.toFixed(1) + "px,0)";
+          if (Math.abs(tsx - sx) > 0.4 || Math.abs(tsy - sy) > 0.4) {
+            raf = requestAnimationFrame(tick);
           }
-          if (scrolling) scrolling = false;
-          requestAnimationFrame(tick);
         }
-        requestAnimationFrame(tick);
+
+        function kick() {
+          if (!raf) raf = requestAnimationFrame(tick);
+          clearTimeout(idleTimer);
+          idleTimer = setTimeout(function () {
+            if (raf) {
+              cancelAnimationFrame(raf);
+              raf = 0;
+            }
+          }, 180);
+        }
+
+        window.addEventListener("pointermove", function (e) {
+          tsx = e.clientX;
+          tsy = e.clientY;
+          kick();
+        }, { passive: true });
       }
 
       /* Reveal + count-up */
@@ -1358,7 +1379,7 @@
         var suffix = el.getAttribute("data-suffix") || "";
         if (isNaN(target)) return;
         var start = performance.now();
-        var dur = 1100;
+        var dur = 900;
         function frame(now) {
           var t = Math.min(1, (now - start) / dur);
           var eased = 1 - Math.pow(1 - t, 3);
@@ -1382,12 +1403,10 @@
         entries.forEach(function (entry) {
           if (!entry.isIntersecting) return;
           entry.target.classList.add("in");
-          if (entry.target.id === "about" || entry.target.querySelector) {
-            entry.target.querySelectorAll("[data-count]").forEach(countUp);
-          }
+          entry.target.querySelectorAll("[data-count]").forEach(countUp);
           io.unobserve(entry.target);
         });
-      }, { threshold: 0.14, rootMargin: "0px 0px -40px 0px" });
+      }, { threshold: 0.12, rootMargin: "0px 0px -32px 0px" });
       nodes.forEach(function (el) { io.observe(el); });
     })();
   </script>
